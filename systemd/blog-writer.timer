@@ -1,0 +1,10 @@
+[Unit]
+Description=Run blog-writer daily at 00:05 UTC (5-min buffer past midnight)
+
+[Timer]
+OnCalendar=*-*-* 00:05:00 UTC
+Persistent=true
+AccuracySec=30s
+
+[Install]
+WantedBy=timers.target

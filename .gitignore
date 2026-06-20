@@ -1,0 +1,8 @@
+# Local, host-specific config — may contain a webhook URL and real paths.
+.env
+
+# Run logs are LOCAL-ONLY. They capture the raw private-note diff and the
+# agent's redaction summary, which can contain real secrets / IPs / names.
+# Never commit them. Notifications go out over the Discord webhook instead.
+logs/*
+!logs/.gitkeep

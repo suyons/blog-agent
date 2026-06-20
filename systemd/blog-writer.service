@@ -1,0 +1,14 @@
+[Unit]
+Description=Daily automated blog drafter (reads yesterday's private-note diff, writes a Hugo draft post)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+# __USER__ / __HOME__ are substituted by install.sh for the deploying user.
+User=__USER__
+Environment=HOME=__HOME__
+Environment=PATH=__HOME__/.local/bin:/opt/node/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/bin
+WorkingDirectory=__HOME__/blog-agent
+ExecStart=/usr/local/bin/blog-writer.sh
+TimeoutStartSec=1800
