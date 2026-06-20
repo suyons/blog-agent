@@ -6,10 +6,6 @@
 </p>
 
 <p align="center">
-  <code>blog-agent</code>
-</p>
-
-<p align="center">
   <img alt="shell" src="https://img.shields.io/badge/shell-bash-4EAA25?logo=gnubash&logoColor=white">
   <img alt="scheduler" src="https://img.shields.io/badge/scheduler-systemd-FCC624?logo=linux&logoColor=black">
   <img alt="static site" src="https://img.shields.io/badge/site-Hugo-FF4088?logo=hugo&logoColor=white">
