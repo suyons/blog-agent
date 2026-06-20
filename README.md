@@ -1,7 +1,12 @@
-<h1 align="center">blog-agent</h1>
+<h1 align="center">✍️ Blog Agent</h1>
 
 <p align="center">
-  <em>A daily autonomous writer that turns your private engineering notes into publishable blog drafts.</em>
+  <strong>Your engineering notes, written up overnight.</strong><br>
+  <em>A daily autonomous agent that turns your private note vault into publishable blog drafts.</em>
+</p>
+
+<p align="center">
+  <code>blog-agent</code>
 </p>
 
 <p align="center">
