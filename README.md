@@ -69,7 +69,7 @@ flowchart TD
 |---|---|
 | `blog-writer.sh` | The orchestrator. Installed to `/usr/local/bin/blog-writer.sh`. |
 | `backfill.sh` | One-off helper to draft posts across a past date range. |
-| `BLOG_GUIDE.md` | Editorial voice, quality bar, frontmatter schema, and privacy/scrub rules. |
+| `BLOG_GUIDE.md` | Editorial voice, quality bar, frontmatter schema, and privacy/scrub rules. **Opinionated — written for the author's situation; adapt it before using** (see [Setup](#setup)). |
 | `systemd/blog-writer.{service,timer}` | The schedule. Installed to `/etc/systemd/system/`. |
 | `install.sh` | Renders the unit for the current user, deploys, and enables the timer (idempotent). |
 | `.env.example` | Config template — copy to `.env` (gitignored) and fill in. |
@@ -84,6 +84,16 @@ cd blog-agent
 cp .env.example .env      # edit: paths, GitHub owner, Discord webhook
 ./install.sh              # deploys the script + unit, enables the timer
 ```
+
+> **Adapt `BLOG_GUIDE.md` to your own situation before the first run.** The checked-in
+> guide is tailored to the author — a Korean engineer writing for an overseas,
+> non-Korean audience — so it carries rules that are specific to that context, most
+> notably an **English-only** mandate that translates Korean source notes into English,
+> plus an author-specific target audience, title/category conventions, and voice.
+> If your notes and readers differ (a different source language, a different audience,
+> a different blog structure), rewrite those sections — especially the *Mission*,
+> *Language*, *Hugo Conventions*, and *Voice* parts. The *Privacy & sensitive data*
+> rules are the one section worth keeping as-is.
 
 ### Configuration (`.env`)
 
