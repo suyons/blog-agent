@@ -1,4 +1,4 @@
-<h1 align="center">✍️ Blog Agent</h1>
+<h1 align="center">Blog Agent</h1>
 
 <p align="center">
   <strong>Your engineering notes, written up overnight.</strong><br>
