@@ -27,7 +27,7 @@ while [[ "$d" < "$END_DAY" || "$d" == "$END_DAY" ]]; do
       /usr/local/bin/blog-writer.sh >>"$MASTER" 2>&1
   # capture the one-line verdict for the consolidated summary
   rl="$AGENT_DIR/logs/${postdate}.log"
-  v="$(grep -hoE 'BLOG_WRITER: (POSTED|SKIP)[^\n]*' "$rl" 2>/dev/null | tail -1)"
+  v="$(grep -hoE 'BLOG_WRITER: (POSTED|SKIP)[^\n]*' "$rl" 2>/dev/null | paste -sd '|' - | sed 's/|/; /g')"
   mlog "   verdict: ${v:-<none / see day log>}"
   summary+="${postdate}: ${v:-<none>}"$'\n'
   d="$(date -u -d "$d +1 day" +%F)"

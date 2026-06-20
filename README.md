@@ -51,7 +51,8 @@ flowchart TD
 2. **Branch** — checks out a fresh `draft` branch off `origin/main` in the blog repo, so the
    draft never collides with what's already published.
 3. **Draft** — Claude Code reads the guide and the diff, judges whether the material clears
-   the quality bar, scrubs anything sensitive, then writes one post and verifies it builds
+   the quality bar, scrubs anything sensitive, then writes a post for each genuinely
+   distinct worthy thread (usually one, up to three on a rich day) and verifies each builds
    with `hugo --gc --minify`.
 4. **Review** — if a post landed, it opens (or updates) a single `draft → main` pull request
    via the GitHub REST API. You review and merge with one click; the blog's GitHub Pages

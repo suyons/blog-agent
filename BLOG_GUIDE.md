@@ -79,13 +79,18 @@ DevOps; servers, remote desktop, self-hosted service hosting → Infrastructure.
 
 ## Workflow
 1. Read existing posts to learn structure + voice.
-2. Draft the post as a markdown file in the correct location.
-3. You are already on the `draft` branch (the wrapper script prepared it). Commit
-   ONLY your new post file, push to `draft`. (The wrapper then opens/updates a
+2. Draft a markdown file in the correct location for each worthy thread. Most days
+   that is ONE post. Write a separate post per genuinely distinct thread that each
+   independently clears the quality bar — hard cap of 3 per run. Quality over volume:
+   never split one idea across posts to pad the count, and never promote a thin
+   thread just to fill the cap. Each post needs its own thesis and its own slug, with
+   no overlap with the others or with already-published posts.
+3. You are already on the `draft` branch (the wrapper script prepared it). Commit each
+   new post on its own commit, then push to `draft`. (The wrapper then opens/updates a
    `draft -> main` pull request automatically — you don't need to.)
 4. Do NOT touch `main`. The human reviews the PR and merges with one click.
-5. Commit message: concise, conventional style, e.g. `post: <title>`.
-6. After pushing, summarize what you wrote and flag anything you were unsure about
+5. Commit message: concise, conventional style, e.g. `post: <title>` (one per post).
+6. After pushing, summarize each post and flag anything you were unsure about
    (claims to fact-check, code you couldn't run, weak sections).
 
 ## What "rich quality, not AI slop" means here

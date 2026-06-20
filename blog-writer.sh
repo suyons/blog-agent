@@ -144,7 +144,7 @@ You are the daily blog-writing agent for a PUBLIC Hugo blog. Read and follow the
 guide at $GUIDE EXACTLY before doing anything — it defines voice, the quality bar,
 the frontmatter schema, and the privacy/scrubbing rules.
 
-SOURCE MATERIAL (the ONLY input for today's post): yesterday's edits to a PRIVATE
+SOURCE MATERIAL (the ONLY input for today's post(s)): yesterday's edits to a PRIVATE
 note vault, captured here:
     $DIFF_FILE
 The vault is private and MAY CONTAIN REAL secrets, API keys/tokens, IPs, hostnames,
@@ -154,26 +154,33 @@ it and call it out prominently in your summary (it may need rotating).
 
 YOU ARE IN: $BLOG_REPO, already on the 'draft' branch (prepared for you).
 - Read 2-3 recent files in content/posts/ to match frontmatter schema and voice.
-- Filename: content/posts/${TODAY_COMPACT}-<slug>.md (yyyymmdd date prefix + kebab slug). date frontmatter = $TODAY. draft: false.
+- Filenames: content/posts/${TODAY_COMPACT}-<slug>.md (shared yyyymmdd date prefix +
+  a distinct kebab slug per post). date frontmatter = $TODAY. draft: false.
 
 DECISION — judge blog-worthiness honestly:
 - If yesterday's material is thin (typos, trivial edits, half-formed notes, nothing
-  that clears the "a sharp engineer bookmarks this" bar), DO NOT write a post.
+  that clears the "a sharp engineer bookmarks this" bar), DO NOT write any post.
   Print exactly one line:  BLOG_WRITER: SKIP — <one-line reason>
   then stop. Commit nothing.
-- If it IS worthy: write ONE post to content/posts/${TODAY_COMPACT}-<slug>.md. Verify it builds:
-      hugo --gc --minify --buildDrafts=false
-  (run it from $BLOG_REPO; fix any error before continuing). Then commit ONLY your
-  new post file and push:
-      git add content/posts/${TODAY_COMPACT}-<slug>.md
-      git commit -m "post: <title>"
-      git push -u origin draft
-  Never touch main. Never commit anything other than your one new post file.
+- If it IS worthy: write a SEPARATE post for EACH genuinely distinct thread that
+  independently clears the bookmark bar. Most days that is exactly ONE post. Write
+  more than one ONLY when the material truly supports it — hard cap of 3 per run.
+  Quality over volume: never split a single idea across posts to pad the count, never
+  promote a thin thread just to fill the cap, and make sure each post stands on its
+  own thesis with no overlap with the others or with already-published posts.
+  For EACH post: write content/posts/${TODAY_COMPACT}-<slug>.md with its own slug.
+  Then build-check everything and commit one post per commit:
+      hugo --gc --minify --buildDrafts=false   # run from $BLOG_REPO; fix any error first
+      git add content/posts/${TODAY_COMPACT}-<slug>.md   # the post you just wrote
+      git commit -m "post: <title>"                       # one commit per post
+      git push -u origin draft                            # push once, after all posts
+  Never touch main. Commit ONLY post files you created under content/posts/.
 
-FINISH with a summary. If you posted, start it with:
+FINISH with a summary. For EACH post you wrote, include its own line (one per post):
     BLOG_WRITER: POSTED — <slug>
-then give: the thesis, every redaction you made (flag any seemingly-REAL credential),
-claims the human should fact-check, and any code you wrote but could not run.
+then, per post: the thesis, every redaction you made (flag any seemingly-REAL
+credential), claims the human should fact-check, and any code you wrote but could not
+run. If you wrote more than one, say in one line why each thread earned its own post.
 EOF
 
 if (( DRY_RUN )); then
@@ -232,8 +239,16 @@ if (( ! DRY_RUN )) && [[ "${BLOG_WRITER_SKIP_NOTIFY:-0}" != 1 ]]; then
   elif grep -qE "BLOG_WRITER: SKIP|SKIP —" "$RUN_LOG"; then RESULT="SKIP"
   elif (( STATUS != 0 )); then RESULT="ERROR(exit $STATUS)"
   else RESULT="done"; fi
-  verdict="$(grep -hoE 'BLOG_WRITER: (POSTED|SKIP)[^\n]*' "$RUN_LOG" | tail -1)"
-  notify_discord "blog-writer ${TODAY}: ${RESULT}${verdict:+ — ${verdict#BLOG_WRITER: }}"
+  if [[ "$RESULT" == "POSTED" ]]; then
+    # one POSTED line per post — report the count and join the slugs
+    count="$(grep -cE 'BLOG_WRITER: POSTED' "$RUN_LOG")"
+    slugs="$(grep -hoE 'BLOG_WRITER: POSTED — .+' "$RUN_LOG" \
+             | sed -E 's/^BLOG_WRITER: POSTED — //' | paste -sd '|' - | sed 's/|/, /g')"
+    notify_discord "blog-writer ${TODAY}: POSTED ${count} — ${slugs}"
+  else
+    verdict="$(grep -hoE 'BLOG_WRITER: SKIP[^\n]*' "$RUN_LOG" | tail -1)"
+    notify_discord "blog-writer ${TODAY}: ${RESULT}${verdict:+ — ${verdict#BLOG_WRITER: SKIP — }}"
+  fi
 fi
 
 log "================ blog-writer end ================"
