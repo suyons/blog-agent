@@ -105,7 +105,7 @@ cp .env.example .env      # edit: paths, GitHub owner, Discord webhook
 | `BLOG_REPO` | Local checkout of the public Hugo blog repo. |
 | `AGENT_DIR` | This agent's checkout (where `logs/` and `BLOG_GUIDE.md` live). |
 | `GITHUB_OWNER` · `BLOG_REPO_NAME` | Identify the blog repo for opening the `draft → main` PR. |
-| `BLOG_WRITER_MODEL` | Model id (default `claude-opus-4-8`; `claude-sonnet-4-6` is cheaper). |
+| `BLOG_WRITER_MODEL` | Model id (default `claude-opus-4-8`; `claude-sonnet-5` is cheaper). |
 
 `BLOG_WRITER_DATE=YYYY-MM-DD` (an env var, not stored in `.env`) overrides "today" to
 re-run a past day — handy for testing.
